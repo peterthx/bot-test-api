@@ -21,10 +21,6 @@ jobs:
       # pick ONE of the stacks below (Node/Python/Java/etc.)
       - uses: actions/setup-node@v4
         with: { node-version: 20 }
-      - uses: actions/setup-python@v5
-        with: { python-version: '3.11' }
-      - run: pip install -r requirements.txt
-      - run: pytest -q
 
       # cache deps (speeds up builds)
       - uses: actions/cache@v4
