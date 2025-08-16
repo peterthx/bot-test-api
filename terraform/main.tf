@@ -24,7 +24,7 @@ resource "docker_container" "httpbin" {
   }
   # healthcheck แบบง่าย ๆ
   healthcheck {
-    test     = ["CMD", "wget", "-q", "-O", "-", "http://localhost/headers"]
+    test     = ["CMD", "wget", "-q", "-O", "-", "http://localhost/health"]
     interval = "10s"
     timeout  = "2s"
     retries  = 3
