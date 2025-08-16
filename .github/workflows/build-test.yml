@@ -53,22 +53,3 @@ jobs:
             build
             coverage
           retention-days: 7
-
-  # Optional: Add a separate job for security scanning
-  security:
-    runs-on: ubuntu-latest
-    if: github.event_name == 'pull_request'
-    steps:
-      - uses: actions/checkout@v4
-      - name: Run security audit
-        run: npm audit --audit-level moderate
-
-  # Optional: Add deployment job that runs after tests pass
-  deploy:
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-    needs: test
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Deploy to staging
-        run: echo "Deploy logic here"
