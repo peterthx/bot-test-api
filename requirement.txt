@@ -1,0 +1,14 @@
+tests/
+  ├── resources/
+  │     ├── api_keywords.robot   # custom keywords for API
+  │     ├── variables.robot      # global variables (URL, tokens, etc.)
+  │
+  ├── suites/
+  │     ├── health_check.robot   # simple smoke test
+  │     ├── user_api.robot       # user endpoints test cases
+  │     ├── transaction_api.robot# transaction endpoints test cases
+  │
+  ├── libraries/
+  │     └── custom_library.py    # optional Python keywords
+  │
+  └── robot.yaml / pyproject.toml # execution config (if using rcc/pabot)
