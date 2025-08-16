@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.3.2 (Python 3.13.7 on win32)" generated="2025-08-16T15:19:16.217721" rpa="false" schemaversion="5">
+<suite id="s1" name="Health Check" source="D:\LabsProject\github\public_repo\bot-test-api\tests\health_check.robot">
+<test id="s1-t1" name="Health Check Endpoint Should Return 200" line="6">
+<kw name="Create API Session" owner="api_keywords">
+<kw name="Create Session" owner="RequestsLibrary">
+<msg time="2025-08-16T15:19:16.577470" level="INFO">Creating Session using : alias=api, url=http://localhost:3000, headers={'Content-Type': 'application/json'},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<arg>api</arg>
+<arg>${BASE_URL}</arg>
+<arg>headers={"Content-Type": "${CONTENT_TYPE}"}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="PASS" start="2025-08-16T15:19:16.577130" elapsed="0.000549"/>
+</kw>
+<status status="PASS" start="2025-08-16T15:19:16.576615" elapsed="0.001153"/>
+</kw>
+<kw name="Get Health Check" owner="api_keywords">
+<kw name="GET On Session" owner="RequestsLibrary">
+<msg time="2025-08-16T15:19:16.586807" level="INFO">GET Request : url=http://localhost:3000/health 
+ path_url=/health 
+ headers={'User-Agent': 'python-requests/2.32.4', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json'} 
+ body=None 
+ </msg>
+<msg time="2025-08-16T15:19:16.586998" level="INFO">GET Response : url=http://localhost:3000/health 
+ status=200, reason=OK 
+ headers={'Content-Security-Policy': "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests", 'Cross-Origin-Opener-Policy': 'same-origin', 'Cross-Origin-Resource-Policy': 'same-origin', 'Origin-Agent-Cluster': '?1', 'Referrer-Policy': 'no-referrer', 'Strict-Transport-Security': 'max-age=31536000; includeSubDomains', 'X-Content-Type-Options': 'nosniff', 'X-DNS-Prefetch-Control': 'off', 'X-Download-Options': 'noopen', 'X-Frame-Options': 'SAMEORIGIN', 'X-Permitted-Cross-Domain-Policies': 'none', 'X-XSS-Protection': '0', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '120', 'ETag': 'W/"78-8BzaoME9D1cZW7jib90rc0nc0fM"', 'Date': 'Sat, 16 Aug 2025 08:19:16 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'} 
+ body={"status":"OK","timestamp":"2025-08-16T08:19:16.585Z","uptime":49.3709394,"environment":"development","version":"1.0.0"} 
+ </msg>
+<msg time="2025-08-16T15:19:16.587156" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>api</arg>
+<arg>${endpoint}</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2025-08-16T15:19:16.578341" elapsed="0.008844"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2025-08-16T15:19:16.587830" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2025-08-16T15:19:16.587330" elapsed="0.000564"/>
+</kw>
+<return>
+<value>${response}</value>
+<status status="PASS" start="2025-08-16T15:19:16.587944" elapsed="0.000044"/>
+</return>
+<msg time="2025-08-16T15:19:16.588106" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
+<var>${resp}</var>
+<arg>/health</arg>
+<status status="PASS" start="2025-08-16T15:19:16.578012" elapsed="0.010115"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-08-16T15:19:16.588641" level="INFO">{'status': 'OK', 'timestamp': '2025-08-16T08:19:16.585Z', 'uptime': 49.3709394, 'environment': 'development', 'version': '1.0.0'}</msg>
+<arg>${resp.json()}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-08-16T15:19:16.588321" elapsed="0.000359"/>
+</kw>
+<status status="PASS" start="2025-08-16T15:19:16.575881" elapsed="0.012963"/>
+</test>
+<test id="s1-t2" name="Search Employee All users" line="11">
+<kw name="Create API Session" owner="api_keywords">
+<kw name="Create Session" owner="RequestsLibrary">
+<msg time="2025-08-16T15:19:16.590186" level="INFO">Creating Session using : alias=api, url=http://localhost:3000, headers={'Content-Type': 'application/json'},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<arg>api</arg>
+<arg>${BASE_URL}</arg>
+<arg>headers={"Content-Type": "${CONTENT_TYPE}"}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="PASS" start="2025-08-16T15:19:16.589917" elapsed="0.000416"/>
+</kw>
+<status status="PASS" start="2025-08-16T15:19:16.589691" elapsed="0.000701"/>
+</kw>
+<kw name="GET EMPLOYEE" owner="api_keywords">
+<kw name="GET On Session" owner="RequestsLibrary">
+<msg time="2025-08-16T15:19:16.685184" level="INFO">GET Request : url=http://localhost:3000/api/employees 
+ path_url=/api/employees 
+ headers={'User-Agent': 'python-requests/2.32.4', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json'} 
+ body=None 
+ </msg>
+<msg time="2025-08-16T15:19:16.685302" level="INFO">GET Response : url=http://localhost:3000/api/employees 
+ status=200, reason=OK 
+ headers={'Content-Security-Policy': "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests", 'Cross-Origin-Opener-Policy': 'same-origin', 'Cross-Origin-Resource-Policy': 'same-origin', 'Origin-Agent-Cluster': '?1', 'Referrer-Policy': 'no-referrer', 'Strict-Transport-Security': 'max-age=31536000; includeSubDomains', 'X-Content-Type-Options': 'nosniff', 'X-DNS-Prefetch-Control': 'off', 'X-Download-Options': 'noopen', 'X-Frame-Options': 'SAMEORIGIN', 'X-Permitted-Cross-Domain-Policies': 'none', 'X-XSS-Protection': '0', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '1616', 'ETag': 'W/"650-IewmIQlOe57mg1HqULr5x1D5hTw"', 'Date': 'Sat, 16 Aug 2025 08:19:16 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'} 
+ body={"success":true,"data":[{"employee_id":1,"full_name":"John Doe","first_name":"John","last_name":"Doe","email":"john.doe@company.com","salary":"85000.00","department_name":"Engineering","hire_date":"2023-01-14T17:00:00.000Z","is_active":true},{"employee_id":2,"full_name":"Jane Smith","first_name":"Jane","last_name":"Smith","email":"jane.smith@company.com","salary":"92000.00","department_name":"Engineering","hire_date":"2023-02-19T17:00:00.000Z","is_active":true},{"employee_id":3,"full_name":"Mike Johnson","first_name":"Mike","last_name":"Johnson","email":"mike.johnson@company.com","salary":"65000.00","department_name":"Marketing","hire_date":"2023-03-09T17:00:00.000Z","is_active":true},{"employee_id":4,"full_name":"Sarah Williams","first_name":"Sarah","last_name":"Williams","email":"sarah.williams@company.com","salary":"58000.00","department_name":"Human Resources","hire_date":"2023-04-04T17:00:00.000Z","is_active":true},{"employee_id":5,"full_name":"David Brown","first_name":"David","last_name":"Brown","email":"david.brown@company.com","salary":"72000.00","department_name":"Finance","hire_date":"2023-05-11T17:00:00.000Z","is_active":true},{"employee_id":6,"full_name":"Lisa Davis","first_name":"Lisa","last_name":"Davis","email":"lisa.davis@company.com","salary":"68000.00","department_name":"Sales","hire_date":"2023-06-17T17:00:00.000Z","is_active":true},{"employee_id":7,"full_name":"Peter Parker","first_name":"Peter","last_name":"Parker","email":"peter.parker@company.com","salary":"69000.00","department_name":"Engineering","hire_date":"2025-08-11T17:00:00.000Z","is_active":null}],"count":7} 
+ </msg>
+<msg time="2025-08-16T15:19:16.685482" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>api</arg>
+<arg>${endpoint}</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2025-08-16T15:19:16.590783" elapsed="0.094866"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2025-08-16T15:19:16.686216" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2025-08-16T15:19:16.685790" elapsed="0.000499"/>
+</kw>
+<return>
+<value>${response}</value>
+<status status="PASS" start="2025-08-16T15:19:16.686362" elapsed="0.000050"/>
+</return>
+<msg time="2025-08-16T15:19:16.686535" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
+<var>${resp}</var>
+<arg>/api/employees</arg>
+<status status="PASS" start="2025-08-16T15:19:16.590598" elapsed="0.095959"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-08-16T15:19:16.687323" level="INFO">{'success': True, 'data': [{'employee_id': 1, 'full_name': 'John Doe', 'first_name': 'John', 'last_name': 'Doe', 'email': 'john.doe@company.com', 'salary': '85000.00', 'department_name': 'Engineering', 'hire_date': '2023-01-14T17:00:00.000Z', 'is_active': True}, {'employee_id': 2, 'full_name': 'Jane Smith', 'first_name': 'Jane', 'last_name': 'Smith', 'email': 'jane.smith@company.com', 'salary': '92000.00', 'department_name': 'Engineering', 'hire_date': '2023-02-19T17:00:00.000Z', 'is_active': True}, {'employee_id': 3, 'full_name': 'Mike Johnson', 'first_name': 'Mike', 'last_name': 'Johnson', 'email': 'mike.johnson@company.com', 'salary': '65000.00', 'department_name': 'Marketing', 'hire_date': '2023-03-09T17:00:00.000Z', 'is_active': True}, {'employee_id': 4, 'full_name': 'Sarah Williams', 'first_name': 'Sarah', 'last_name': 'Williams', 'email': 'sarah.williams@company.com', 'salary': '58000.00', 'department_name': 'Human Resources', 'hire_date': '2023-04-04T17:00:00.000Z', 'is_active': True}, {'employee_id': 5, 'full_name': 'David Brown', 'first_name': 'David', 'last_name': 'Brown', 'email': 'david.brown@company.com', 'salary': '72000.00', 'department_name': 'Finance', 'hire_date': '2023-05-11T17:00:00.000Z', 'is_active': True}, {'employee_id': 6, 'full_name': 'Lisa Davis', 'first_name': 'Lisa', 'last_name': 'Davis', 'email': 'lisa.davis@company.com', 'salary': '68000.00', 'department_name': 'Sales', 'hire_date': '2023-06-17T17:00:00.000Z', 'is_active': True}, {'employee_id': 7, 'full_name': 'Peter Parker', 'first_name': 'Peter', 'last_name': 'Parker', 'email': 'peter.parker@company.com', 'salary': '69000.00', 'department_name': 'Engineering', 'hire_date': '2025-08-11T17:00:00.000Z', 'is_active': None}], 'count': 7}</msg>
+<arg>${resp.json()}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-08-16T15:19:16.686825" elapsed="0.000561"/>
+</kw>
+<status status="PASS" start="2025-08-16T15:19:16.589279" elapsed="0.098292"/>
+</test>
+<status status="PASS" start="2025-08-16T15:19:16.218932" elapsed="0.469340"/>
+</suite>
+<statistics>
+<total>
+<stat pass="2" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat name="Health Check" id="s1" pass="2" fail="0" skip="0">Health Check</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
