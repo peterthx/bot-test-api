@@ -6,15 +6,78 @@ on:
   pull_request:
     branches: [ "main" ]
 
-jobs:
-  build:
+concurrency:
+  group: jekyll-${{ github.ref }}
+  cancel-in-progress: true
 
+jobs:
+  build-and-test:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Build the site in the jekyll/builder container
-      run: |
-        docker run \
-        -v ${{ github.workspace }}:/srv/jekyll -v ${{ github.workspace }}/_site:/srv/jekyll/_site \
-        jekyll/builder:latest /bin/bash -c "chmod -R 777 /srv/jekyll && jekyll build --future"
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # Optional: cache Ruby gems (works when you have a Gemfile/Gemfile.lock)
+      - name: Cache bundle
+        uses: actions/cache@v4
+        with:
+          path: vendor/bundle
+          key: bundle-${{ runner.os }}-${{ hashFiles('**/Gemfile.lock') }}
+          restore-keys: |
+            bundle-${{ runner.os }}-
+
+      - name: Build the site in the jekyll/builder container
+        run: |
+          docker run --rm \
+            -e JEKYLL_ENV=production \
+            -e BUNDLE_PATH=/srv/jekyll/vendor/bundle \
+            -v "${{ github.workspace }}:/srv/jekyll" \
+            -v "${{ github.workspace }}/_site:/srv/jekyll/_site" \
+            jekyll/builder:latest /bin/bash -lc "
+              chmod -R 777 /srv/jekyll &&
+              if [ -f Gemfile ]; then bundle install --retry 3; fi &&
+              jekyll build --future --trace
+            "
+
+      - name: Test built site with HTMLProofer
+        run: |
+          docker run --rm \
+            -e BUNDLE_PATH=/srv/jekyll/vendor/bundle \
+            -v "${{ github.workspace }}:/srv/jekyll" \
+            jekyll/builder:latest /bin/bash -lc "
+              gem list -i html-proofer >/dev/null || gem install html-proofer --no-document &&
+              htmlproofer ./_site \
+                --assume-extension \
+                --check-html \
+                --check-opengraph \
+                --http-status-ignore 429 \
+                --url-ignore 'https://localhost:*,http://localhost:*'
+            "
+
+      - name: Upload built site (_site)
+        uses: actions/upload-artifact@v4
+        with:
+          name: jekyll-site
+          path: _site/
+
+# name: Jekyll site CI
+
+# on:
+#   push:
+#     branches: [ "main" ]
+#   pull_request:
+#     branches: [ "main" ]
+
+# jobs:
+#   build:
+
+#     runs-on: ubuntu-latest
+
+#     steps:
+#     - uses: actions/checkout@v4
+#     - name: Build the site in the jekyll/builder container
+#       run: |
+#         docker run \
+#         -v ${{ github.workspace }}:/srv/jekyll -v ${{ github.workspace }}/_site:/srv/jekyll/_site \
+#         jekyll/builder:latest /bin/bash -c "chmod -R 777 /srv/jekyll && jekyll build --future"
