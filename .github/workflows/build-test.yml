@@ -1,12 +1,9 @@
-# .github/workflows/ci.yml
 name: CI
-
 on:
   push:
     branches: [ main ]
   pull_request:
     branches: [ main ]
-
 concurrency:
   group: ci-${{ github.ref }}
   cancel-in-progress: true
@@ -14,31 +11,64 @@ concurrency:
 jobs:
   test:
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v4
-
-      # pick ONE of the stacks below (Node/Python/Java/etc.)
-      - uses: actions/setup-node@v4
-        with: { node-version: 20 }
-
-      # cache deps (speeds up builds)
-      - uses: actions/cache@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with: 
+          node-version: 20
+          cache: 'npm'  # Built-in caching, simpler than manual cache setup
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Run linting
+        run: npm run lint --if-present
+      
+      - name: Run type checking
+        run: npm run type-check --if-present
+      
+      - name: Run tests
+        run: npm test --if-present
+      
+      - name: Build project
+        run: npm run build --if-present
+      
+      # Upload test coverage to codecov or similar
+      - name: Upload coverage reports
+        uses: codecov/codecov-action@v3
+        if: success() && hashFiles('coverage/**') != ''
         with:
-          path: |
-            ~/.npm
-          key: npm-${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: npm-${{ runner.os }}-
-
-      - run: npm ci
-      - run: npm test --if-present
-      - run: npm run build --if-present
-
-      # keep build outputs for later jobs / debugging
-      - uses: actions/upload-artifact@v4
+          directory: ./coverage
+      
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: build-artifacts
+          name: build-artifacts-${{ github.sha }}
           path: |
             dist
+            build
             coverage
+          retention-days: 7
+
+  # Optional: Add a separate job for security scanning
+  security:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run security audit
+        run: npm audit --audit-level moderate
+
+  # Optional: Add deployment job that runs after tests pass
+  deploy:
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Deploy to staging
+        run: echo "Deploy logic here"
