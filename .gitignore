@@ -1,0 +1,26 @@
+# Create a virtual environment (replace 'robot-env' with your preferred name)
+python3 -m venv robot-env
+
+# Or specify the full path if you want it in a specific location
+python3 -m venv ~/robot-env
+
+# Activate the virtual environment
+source robot-env/bin/activate
+
+# You should see (robot-env) at the beginning of your terminal prompt
+
+# Now install Robot Framework in the virtual environment
+python3 -m pip install robotframework
+
+# Install additional useful libraries
+python3 -m pip install robotframework-seleniumlibrary
+python3 -m pip install robotframework-requests
+
+# Check Robot Framework version
+robot --version
+
+# Verify Python can import it
+python3 -c "import robot; print(robot.__version__)"
+
+# List installed packages
+pip list | grep robot
