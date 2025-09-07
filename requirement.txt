@@ -1,14 +1,32 @@
-tests/
-  ├── resources/
-  │     ├── api_keywords.robot   # custom keywords for API
-  │     ├── variables.robot      # global variables (URL, tokens, etc.)
-  │
-  ├── suites/
-  │     ├── health_check.robot   # simple smoke test
-  │     ├── user_api.robot       # user endpoints test cases
-  │     ├── transaction_api.robot# transaction endpoints test cases
-  │
-  ├── libraries/
-  │     └── custom_library.py    # optional Python keywords
-  │
-  └── robot.yaml / pyproject.toml # execution config (if using rcc/pabot)
+1. Install Homebrew (if not already installed)
+ /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+
+2. Install Python via Homebrew
+- brew install python@3.13
+
+3. Install Robot Framework using pip
+- pip3 install robotframework
+
+Or if you want to ensure it's installed for the Homebrew Python specifically:
+- python3 -m pip install robotframework
+
+
+Optional: Install additional libraries
+# For web testing with Selenium
+- pip3 install robotframework-seleniumlibrary
+
+# For API testing
+- pip3 install robotframework-requests
+
+# For database testing
+- pip3 install robotframework-databaselibrary
+
+Troubleshooting tips for M3 Macs
+1.Ensure pip is up to date:
+- python3 -m pip install --upgrade pip
+
+2.For PATH issues, you may need to add Python's bin directory to your PATH. Add this to your "~/.zshrc:"
+export PATH="$(brew --prefix)/opt/python/libexec/bin:$PATH"
+Using "nano source ~/.zshrc"  # or whatever config file you edited
+after config : "source ~/.zshrc"  # or whatever config file you edited

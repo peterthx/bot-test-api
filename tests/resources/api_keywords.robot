@@ -16,6 +16,3 @@ GET EMPLOYEE
     ${response}=    GET On Session    api    ${endpoint}
     Should Be Equal As Integers   ${response.status_code}    200
     RETURN    ${response}
-
-
-

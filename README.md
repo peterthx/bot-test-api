@@ -1,4 +1,4 @@
-# bot-test-api
+# bot-regression-test
 ```
 --- how to run and save file test result -----------------
     // Use run normal
@@ -14,4 +14,6 @@
     // Use for Command line(CMD)
     -> robot --outputdir tests\results\%date:~10,4%%date:~4,2%%date:~7,2%_%time:~0,2%%time:~3,2%%time:~6,2% tests\(your_file_name.robot)
 
+    // run for MacOS(M series)
+    -> python3 -m robot --outputdir tests/suites/results/$(date +%Y%m%d_%H%M%S) tests/suites/health_check.robot
 ```
